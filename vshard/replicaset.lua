@@ -341,7 +341,7 @@ end
 
 --
 -- Template to implement a function able to visit multiple
--- replicas with certain details. One of applicatinos - a function
+-- replicas with certain details. One of applications - a function
 -- making a call on a nearest available replica. It is possible
 -- for 'read' requests only. And if the nearest replica is not
 -- available now, then use master's connection - we can not wait
@@ -405,7 +405,7 @@ local function replicaset_template_multicallro(prefer_replica, balance)
             if not net_status and not storage_status and
                not can_retry_after_error(retval) then
                 -- There is no sense to retry LuaJit errors, such as
-                -- assetions, not defined variables etc.
+                -- assertions, not defined variables etc.
                 net_status = true
                 break
             end
