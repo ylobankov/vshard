@@ -1,6 +1,7 @@
 name: tarantool_testing
 
 on:
+  workflow_dispatch: 
   repository_dispatch:
 
 jobs:
@@ -11,10 +12,10 @@ jobs:
         uses: dawidd6/action-download-artifact@v2
         with:
           github_token: ${{secrets.GH_TOKEN}}
-          repo: ${{github.event.client_payload.repository}}
-          workflow: ${{github.event.client_payload.workflow}}
+          repo: ylobankov/tarantool
+          workflow: test_vshard.yml
           workflow_conclusion: success
-          commit: ${{github.event.client_payload.sha}}
+          commit: 5b1c37360966ab17a8445f2484f60dae1fe6c61d
           name: ubuntu-focal
 
       - name: Clone the module
