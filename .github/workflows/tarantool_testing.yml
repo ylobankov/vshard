@@ -13,10 +13,9 @@ jobs:
           github_token: ${{secrets.GH_TOKEN}}
           repo: ${{github.event.client_payload.repository}}
           workflow: ${{github.event.client_payload.workflow}}
-          workflow_conclusion: success
           commit: ${{github.event.client_payload.sha}}
-          name: ubuntu-focal
-
+          name: ${{github.event.client_payload.artifact}}
+          workflow_conclusion: success
       - name: Clone the module
         uses: actions/checkout@v2
         with:
@@ -26,9 +25,7 @@ jobs:
           # Enable recursive submodules checkout as test-run git module is used
           # for running tests.
           submodules: recursive
-
       - name: Install test requirements
         run: pip3 install --user -r test-run/requirements.txt
-
       - run: cmake .
       - run: make test
