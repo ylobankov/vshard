@@ -45,6 +45,7 @@ jobs:
           commit: ${{github.event.inputs.sha}}
           run_id: ${{github.event.inputs.run_id}}
           name: ${{github.event.inputs.artifact}}
+          workflow_conclusion: in_progress
       - name: Install tarantool
         run: sudo dpkg -i tarantool*.deb
       - name: Install test requirements
