@@ -2,6 +2,23 @@ name: tarantool_testing
 
 on:
   repository_dispatch:
+  workflow_dispatch:
+    inputs:
+      repository:
+        description: 'Repository to search for the artifact'
+        required: false
+        default: 'ylobankov/tarantool'
+      workflow:
+        description: 'Workflow to search for the artifact'
+        required: false
+        default: 'check_module_integration.yml'
+      sha:
+        description: 'commit SHA to search for the artifact'
+        required: true
+      artifact:
+        description: 'Name of the artifact to download'
+        required: false
+        default: 'ubuntu-focal'
 
 jobs:
   run_module_tests:
@@ -20,10 +37,10 @@ jobs:
         uses: dawidd6/action-download-artifact@v2
         with:
           github_token: ${{secrets.GH_TOKEN}}
-          repo: ${{github.event.client_payload.repository}}
-          workflow: ${{github.event.client_payload.workflow}}
-          commit: ${{github.event.client_payload.sha}}
-          name: ${{github.event.client_payload.artifact}}
+          repo: ${{github.event.inputs.repository}}
+          workflow: ${{github.event.inputs.workflow}}
+          commit: ${{github.event.inputs.sha}}
+          name: ${{github.event.inputs.artifact}}
           workflow_conclusion: success
       - name: Install tarantool
         run: sudo dpkg -i tarantool*.deb
