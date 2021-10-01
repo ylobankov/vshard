@@ -10,7 +10,7 @@ jobs:
       - name: Download artifacts
         uses: dawidd6/action-download-artifact@v2
         with:
-          github_token: ${{secrets.ACCESS_TOKEN}}
+          github_token: ${{secrets.GH_TOKEN}}
           repo: ${{github.event.client_payload.repository}}
           workflow: ${{github.event.client_payload.workflow}}
           workflow_conclusion: success
