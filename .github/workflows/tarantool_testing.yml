@@ -4,7 +4,7 @@ on:
   repository_dispatch:
 
 jobs:
-  run_tests:
+  run_module_tests:
     runs-on: ubuntu-20.04
     steps:
       - name: Clone the module
@@ -31,3 +31,19 @@ jobs:
         run: pip3 install --user -r test-run/requirements.txt
       - run: cmake .
       - run: make test
+#      - name: Report test status
+#        if: always()
+#        env:
+#          GH_API_URL: https://api.github.com/repos/ylobankov/tarantool/dispatches
+#        run: |
+#          EXIT_CODE=$?
+#          TEST_STATUS='success'
+#          if [ $EXIT_CODE -ne 0 ]; then
+#            TEST_STATUS='fail'
+#          fi
+#
+#          curl -X POST $GH_API_URL \
+#          -H 'Accept: application/vnd.github.everest-preview+json' \
+#          -u ${{ secrets.ACCESS_TOKEN }} \
+#          --data '{"event_type": "test_status",
+#          "client_payload": { "test_status": "$TEST_STATUS"}}'
