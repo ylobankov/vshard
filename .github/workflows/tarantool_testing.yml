@@ -25,6 +25,8 @@ jobs:
           # Enable recursive submodules checkout as test-run git module is used
           # for running tests.
           submodules: recursive
+      - name: Install tarantool
+        run: sudo dpkg -i tarantool*.deb
       - name: Install test requirements
         run: pip3 install --user -r test-run/requirements.txt
       - run: cmake .
