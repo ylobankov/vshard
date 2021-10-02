@@ -1,7 +1,6 @@
 name: tarantool_testing
 
 on:
-  repository_dispatch:
   workflow_dispatch:
     inputs:
       repository:
@@ -14,10 +13,10 @@ on:
         default: 'check_module_integration.yml'
       sha:
         description: 'commit SHA to search for the artifact'
-        required: true
+        required: false
       run_id:
         description: 'Run ID to search for the artifact'
-        required: true
+        required: false
       artifact:
         description: 'Name of the artifact to download'
         required: false
@@ -40,12 +39,10 @@ jobs:
         uses: dawidd6/action-download-artifact@v2
         with:
           github_token: ${{secrets.GH_TOKEN}}
-          repo: ${{github.event.inputs.repository}}
-          workflow: ${{github.event.inputs.workflow}}
-          commit: ${{github.event.inputs.sha}}
-          run_id: ${{github.event.inputs.run_id}}
-          name: ${{github.event.inputs.artifact}}
-          workflow_conclusion: in_progress
+          repo: ylobankov/tarantool
+          workflow: check_module_integration.yml
+          commit: 5b1c37360966ab17a8445f2484f60dae1fe6c61d
+          name: ubuntu-focal
       - name: Install tarantool
         run: sudo dpkg -i tarantool*.deb
       - name: Install test requirements
