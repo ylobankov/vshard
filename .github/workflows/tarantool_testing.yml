@@ -36,6 +36,11 @@ jobs:
           # Enable recursive submodules checkout as test-run git module is used
           # for running tests.
           submodules: recursive
+      - name: Dump GitHub context
+        env:
+          CONTEXT: ${{ toJson(github) }}
+        run: |
+          echo "$CONTEXT"
       - name: Download build artifacts
         uses: dawidd6/action-download-artifact@v2
         with:
