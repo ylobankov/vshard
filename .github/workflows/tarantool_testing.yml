@@ -15,9 +15,6 @@ on:
       sha:
         description: 'commit SHA to search for the artifact'
         required: true
-      run_id:
-        description: 'Run ID to search for the artifact'
-        required: true
       artifact:
         description: 'Name of the artifact to download'
         required: false
@@ -48,7 +45,6 @@ jobs:
           repo: ${{ github.event.inputs.repository }}
           workflow: ${{ github.event.inputs.workflow }}
           commit: ${{ github.event.inputs.sha }}
-          run_id: ${{ github.event.inputs.run_id }}
           name: ${{ github.event.inputs.artifact }}
       - name: Install tarantool
         run: sudo dpkg -i tarantool*.deb
