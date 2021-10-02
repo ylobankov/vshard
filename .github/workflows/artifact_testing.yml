@@ -1,27 +1,27 @@
-name: tarantool_testing
+name: artifact_testing
 
 on:
-  repository_dispatch:
   workflow_dispatch:
     inputs:
       repository:
         description: 'Repository to search for the artifact'
+        default: 'tarantool/tarantool'
         required: false
-        default: 'ylobankov/tarantool'
       workflow:
         description: 'Workflow to search for the artifact'
+        default: 'build_tarantool_pkg.yml'
         required: false
-        default: 'check_module_integration.yml'
       sha:
-        description: 'commit SHA to search for the artifact'
+        description: 'Commit SHA to search for the artifact'
+        default: master
         required: true
       artifact:
-        description: 'Name of the artifact to download'
-        required: false
+        description: 'Name of the artifact'
         default: 'ubuntu-focal'
+        required: false
 
 jobs:
-  run_module_tests:
+  run_tests:
     runs-on: ubuntu-20.04
     steps:
       - name: Clone the module
@@ -33,11 +33,6 @@ jobs:
           # Enable recursive submodules checkout as test-run git module is used
           # for running tests.
           submodules: recursive
-      - name: Dump GitHub context
-        env:
-          CONTEXT: ${{ toJson(github) }}
-        run: |
-          echo "$CONTEXT"
       - name: Download build artifacts
         uses: dawidd6/action-download-artifact@v2
         with:
@@ -46,25 +41,10 @@ jobs:
           workflow: ${{ github.event.inputs.workflow }}
           commit: ${{ github.event.inputs.sha }}
           name: ${{ github.event.inputs.artifact }}
+          workflow_conclusion: success
       - name: Install tarantool
         run: sudo dpkg -i tarantool*.deb
       - name: Install test requirements
         run: pip3 install --user -r test-run/requirements.txt
       - run: cmake .
       - run: make test
-#      - name: Report test status
-#        if: always()
-#        env:
-#          GH_API_URL: https://api.github.com/repos/ylobankov/tarantool/dispatches
-#        run: |
-#          EXIT_CODE=$?
-#          TEST_STATUS='success'
-#          if [ $EXIT_CODE -ne 0 ]; then
-#            TEST_STATUS='fail'
-#          fi
-#
-#          curl -X POST $GH_API_URL \
-#          -H 'Accept: application/vnd.github.everest-preview+json' \
-#          -u ${{ secrets.ACCESS_TOKEN }} \
-#          --data '{"event_type": "test_status",
-#          "client_payload": { "test_status": "$TEST_STATUS"}}'
