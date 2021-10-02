@@ -39,13 +39,12 @@ jobs:
       - name: Download build artifacts
         uses: dawidd6/action-download-artifact@v2
         with:
-          github_token: ${{secrets.GH_TOKEN}}
-          repo: ${{github.event.inputs.repository}}
-          workflow: ${{github.event.inputs.workflow}}
-          commit: ${{github.event.inputs.sha}}
-          run_id: ${{github.event.inputs.run_id}}
-          name: ${{github.event.inputs.artifact}}
-          workflow_conclusion: in_progress
+          github_token: ${{ secrets.GH_TOKEN }}
+          repo: ${{ github.event.inputs.repository }}
+          workflow: ${{ github.event.inputs.workflow }}
+          commit: ${{ github.event.inputs.sha }}
+          run_id: ${{ github.event.inputs.run_id }}
+          name: ${{ github.event.inputs.artifact }}
       - name: Install tarantool
         run: sudo dpkg -i tarantool*.deb
       - name: Install test requirements
