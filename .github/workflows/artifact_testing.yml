@@ -4,20 +4,19 @@ on:
   workflow_dispatch:
     inputs:
       repository:
-        description: 'Repository to search for the artifact'
-        default: 'tarantool/tarantool'
+        description: Repository to search for the artifact
+        default: tarantool/tarantool
         required: false
       workflow:
-        description: 'Workflow to search for the artifact'
-        default: 'build_tarantool_pkg.yml'
+        description: Workflow to search for the artifact
+        default: build_tarantool.yml
         required: false
       sha:
-        description: 'Commit SHA to search for the artifact'
-        default: master
+        description: Commit SHA to search for the artifact
         required: true
       artifact:
-        description: 'Name of the artifact'
-        default: 'ubuntu-focal'
+        description: Name of the artifact
+        default: ubuntu-focal
         required: false
 
 jobs:
