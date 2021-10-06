@@ -1,4 +1,4 @@
-name: artifact_testing
+name: check_tarantool_integration
 
 on:
   workflow_dispatch:
