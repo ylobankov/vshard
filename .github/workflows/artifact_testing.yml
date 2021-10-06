@@ -3,19 +3,23 @@ name: artifact_testing
 on:
   workflow_dispatch:
     inputs:
-      repository:
-        description: Repository to search for the artifact
+      repo:
+        description: |
+          The full name of the repository like <owner>/<name> to search for
+          the artifact
         default: tarantool/tarantool
         required: false
-      workflow:
-        description: Workflow to search for the artifact
+      workflow_id:
+        description: |
+          The ID of the workflow to search for the artifact, can be replaced
+          with the workflow file name
         default: build_tarantool.yml
         required: false
       sha:
-        description: Commit SHA to search for the artifact
+        description: 'The commit SHA to search for the artifact'
         required: true
-      artifact:
-        description: Name of the artifact
+      artifact_name:
+        description: 'The name of the artifact'
         default: ubuntu-focal
         required: false
 
@@ -23,7 +27,7 @@ jobs:
   run_tests:
     runs-on: ubuntu-20.04
     steps:
-      - name: Clone the module
+      - name: 'Clone the module'
         uses: actions/checkout@v2
         with:
           # Fetch the entire history for all branches and tags. It is needed for
@@ -32,18 +36,18 @@ jobs:
           # Enable recursive submodules checkout as test-run git module is used
           # for running tests.
           submodules: recursive
-      - name: Download build artifacts
+      - name: 'Download build artifacts'
         uses: dawidd6/action-download-artifact@v2
         with:
-          github_token: ${{ secrets.GH_TOKEN }}
-          repo: ${{ github.event.inputs.repository }}
-          workflow: ${{ github.event.inputs.workflow }}
+          github_token: ${{ secrets.GH_TOKEN }}  # remove this later
+          repo: ${{ github.event.inputs.repo }}
+          workflow: ${{ github.event.inputs.workflow_id }}
           commit: ${{ github.event.inputs.sha }}
-          name: ${{ github.event.inputs.artifact }}
+          name: ${{ github.event.inputs.artifact_name }}
           workflow_conclusion: success
-      - name: Install tarantool
+      - name: 'Install tarantool'
         run: sudo dpkg -i tarantool*.deb
-      - name: Install test requirements
+      - name: 'Install test requirements'
         run: pip3 install --user -r test-run/requirements.txt
       - run: cmake .
       - run: make test
