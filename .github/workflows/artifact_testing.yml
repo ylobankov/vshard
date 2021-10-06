@@ -6,20 +6,21 @@ on:
       repo:
         description: |
           The full name of the repository like <owner>/<name> to search for
-          the artifact
+          the tarantool build artifact
         default: tarantool/tarantool
         required: false
       workflow_id:
         description: |
-          The ID of the workflow to search for the artifact, can be replaced
-          with the workflow file name
+          The ID of the build workflow to search for the tarantool build
+          artifact, can be replaced with the workflow file name
         default: build_tarantool.yml
         required: false
       sha:
-        description: 'The commit SHA to search for the artifact'
+        description: |
+          The commit SHA the tarantool build artifact is associated with
         required: true
       artifact_name:
-        description: 'The name of the artifact'
+        description: 'The name of the tarantool build artifact'
         default: ubuntu-focal
         required: false
 
@@ -36,7 +37,7 @@ jobs:
           # Enable recursive submodules checkout as test-run git module is used
           # for running tests.
           submodules: recursive
-      - name: 'Download build artifacts'
+      - name: 'Download the tarantool build artifact'
         uses: dawidd6/action-download-artifact@v2
         with:
           github_token: ${{ secrets.GH_TOKEN }}  # remove this later
