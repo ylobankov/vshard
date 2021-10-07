@@ -37,6 +37,8 @@ jobs:
   run_tests:
     runs-on: ubuntu-20.04
     steps:
+      - run: |
+          echo "Trace ID: ${{ github.event.inputs.trace_id }}"
       - name: 'Clone the module'
         uses: actions/checkout@v2
         with:
