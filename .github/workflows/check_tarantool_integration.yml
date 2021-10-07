@@ -22,8 +22,8 @@ on:
         required: false
       sha:
         description: |
-          The commit SHA the tarantool build artifact is associated with
-        required: true
+          The commit SHA that the tarantool build artifact is associated with
+        required: false
       artifact_name:
         description: 'The name of the tarantool build artifact'
         default: ubuntu-focal
@@ -54,6 +54,7 @@ jobs:
           github_token: ${{ secrets.GH_TOKEN }}  # remove this later
           repo: ${{ github.event.inputs.repo }}
           workflow: ${{ github.event.inputs.workflow_id }}
+          run_id: ${{ github.event.inputs.run_id }}
           commit: ${{ github.event.inputs.sha }}
           name: ${{ github.event.inputs.artifact_name }}
           workflow_conclusion: success
