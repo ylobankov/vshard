@@ -15,6 +15,11 @@ on:
           artifact, can be replaced with the workflow file name
         default: build_tarantool.yml
         required: false
+      run_id:
+        description: |
+          The ID of the workflow run to search for the tarantool build
+          artifact
+        required: false
       sha:
         description: |
           The commit SHA the tarantool build artifact is associated with
@@ -22,6 +27,10 @@ on:
       artifact_name:
         description: 'The name of the tarantool build artifact'
         default: ubuntu-focal
+        required: false
+      trace_id:
+        description: 'Any ID to mark the workflow run'
+        default: '<not set>'
         required: false
 
 jobs:
