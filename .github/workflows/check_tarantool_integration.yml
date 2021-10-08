@@ -38,6 +38,9 @@ on:
         default: '<not set>'
         required: false
         type: string
+    secrets:
+      token:
+        required: true
 
 jobs:
   run_tests:
@@ -54,16 +57,16 @@ jobs:
           # Enable recursive submodules checkout as test-run git module is used
           # for running tests.
           submodules: recursive
-#      - name: 'Download the tarantool build artifact'
-#        uses: dawidd6/action-download-artifact@v2
-#        with:
-#          github_token: ${{ secrets.GH_TOKEN }}  # remove this later
-#          repo: ${{ github.event.inputs.repo }}
-#          workflow: ${{ github.event.inputs.workflow_id }}
-#          run_id: ${{ github.event.inputs.run_id }}
-#          commit: ${{ github.event.inputs.sha }}
-#          name: ${{ github.event.inputs.artifact_name }}
-#          workflow_conclusion: success
+      - name: 'Download the tarantool build artifact'
+        uses: dawidd6/action-download-artifact@v2
+        with:
+          github_token: ${{ secrets.token }}  # remove this later
+          repo: ${{ inputs.repo }}
+          workflow: ${{ inputs.workflow_id }}
+          run_id: ${{ inputs.run_id }}
+          commit: ${{ inputs.sha }}
+          name: ${{ inputs.artifact_name }}
+#          workflow_conclusion: in_progress
 #      - name: 'Install tarantool'
 #        run: sudo dpkg -i tarantool*.deb
 #      - name: 'Install test requirements'
