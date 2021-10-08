@@ -58,14 +58,17 @@ jobs:
           # for running tests.
           submodules: recursive
       - name: 'Download the tarantool build artifact'
-        uses: dawidd6/action-download-artifact@v2
+        uses: actions/download-artifact@v2
         with:
-          github_token: ${{ secrets.token }}  # remove this later
-          repo: ${{ inputs.repo }}
-          workflow: ${{ inputs.workflow_id }}
-          run_id: ${{ inputs.run_id }}
-          commit: ${{ inputs.sha }}
           name: ${{ inputs.artifact_name }}
+#        uses: dawidd6/action-download-artifact@v2
+#        with:
+#          github_token: ${{ secrets.token }}  # remove this later
+#          repo: ${{ inputs.repo }}
+#          workflow: ${{ inputs.workflow_id }}
+#          run_id: ${{ inputs.run_id }}
+#          commit: ${{ inputs.sha }}
+#          name: ${{ inputs.artifact_name }}
 #          workflow_conclusion: in_progress
 #      - name: 'Install tarantool'
 #        run: sudo dpkg -i tarantool*.deb
