@@ -1,7 +1,7 @@
 name: check_tarantool_integration
 
 on:
-  workflow_dispatch:
+  workflow_call:
     inputs:
       repo:
         description: |
@@ -9,29 +9,35 @@ on:
           the tarantool build artifact
         default: tarantool/tarantool
         required: false
+        type: string
       workflow_id:
         description: |
           The ID of the build workflow to search for the tarantool build
           artifact, can be replaced with the workflow file name
         default: build_tarantool.yml
         required: false
+        type: string
       run_id:
         description: |
           The ID of the workflow run to search for the tarantool build
           artifact
         required: false
+        type: string
       sha:
         description: |
           The commit SHA that the tarantool build artifact is associated with
         required: false
+        type: string
       artifact_name:
         description: 'The name of the tarantool build artifact'
         default: ubuntu-focal
         required: false
+        type: string
       trace_id:
         description: 'Any ID to mark the workflow run'
         default: '<not set>'
         required: false
+        type: string
 
 jobs:
   run_tests:
@@ -48,19 +54,19 @@ jobs:
           # Enable recursive submodules checkout as test-run git module is used
           # for running tests.
           submodules: recursive
-      - name: 'Download the tarantool build artifact'
-        uses: dawidd6/action-download-artifact@v2
-        with:
-          github_token: ${{ secrets.GH_TOKEN }}  # remove this later
-          repo: ${{ github.event.inputs.repo }}
-          workflow: ${{ github.event.inputs.workflow_id }}
-          run_id: ${{ github.event.inputs.run_id }}
-          commit: ${{ github.event.inputs.sha }}
-          name: ${{ github.event.inputs.artifact_name }}
-          workflow_conclusion: success
-      - name: 'Install tarantool'
-        run: sudo dpkg -i tarantool*.deb
-      - name: 'Install test requirements'
-        run: pip3 install --user -r test-run/requirements.txt
-      - run: cmake .
-      - run: make test
+#      - name: 'Download the tarantool build artifact'
+#        uses: dawidd6/action-download-artifact@v2
+#        with:
+#          github_token: ${{ secrets.GH_TOKEN }}  # remove this later
+#          repo: ${{ github.event.inputs.repo }}
+#          workflow: ${{ github.event.inputs.workflow_id }}
+#          run_id: ${{ github.event.inputs.run_id }}
+#          commit: ${{ github.event.inputs.sha }}
+#          name: ${{ github.event.inputs.artifact_name }}
+#          workflow_conclusion: success
+#      - name: 'Install tarantool'
+#        run: sudo dpkg -i tarantool*.deb
+#      - name: 'Install test requirements'
+#        run: pip3 install --user -r test-run/requirements.txt
+#      - run: cmake .
+#      - run: make test
