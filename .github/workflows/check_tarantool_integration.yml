@@ -51,6 +51,7 @@ jobs:
       - name: 'Clone the module'
         uses: actions/checkout@v2
         with:
+          repository: ylobankov/vshard
           # Fetch the entire history for all branches and tags. It is needed for
           # upgrade testing.
           fetch-depth: 0
