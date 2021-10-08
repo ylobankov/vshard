@@ -70,9 +70,9 @@ jobs:
 #          commit: ${{ inputs.sha }}
 #          name: ${{ inputs.artifact_name }}
 #          workflow_conclusion: in_progress
-#      - name: 'Install tarantool'
-#        run: sudo dpkg -i tarantool*.deb
-#      - name: 'Install test requirements'
-#        run: pip3 install --user -r test-run/requirements.txt
-#      - run: cmake .
-#      - run: make test
+      - name: 'Install tarantool'
+        run: sudo dpkg -i tarantool*.deb
+      - name: 'Install test requirements'
+        run: pip3 install --user -r test-run/requirements.txt
+      - run: cmake .
+      - run: make test
