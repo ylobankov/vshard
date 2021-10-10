@@ -1,4 +1,4 @@
-name: check_tarantool_integration
+name: reusable_testing
 
 on:
   workflow_call:
@@ -8,9 +8,6 @@ on:
         default: ubuntu-focal
         required: false
         type: string
-    secrets:
-      token:
-        required: true
 
 jobs:
   run_tests:
