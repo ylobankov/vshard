@@ -28,6 +28,8 @@ jobs:
         with:
           name: ${{ inputs.artifact_name }}
       - name: 'Install tarantool'
+        # TODO(ylobankov): Install package dependencies. Now we're lucky: all
+        # dependencies are already there.
         run: sudo dpkg -i tarantool*.deb
       - name: 'Install test requirements'
         run: pip3 install --user -r test-run/requirements.txt
